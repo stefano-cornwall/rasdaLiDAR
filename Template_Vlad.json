@@ -1,0 +1,50 @@
+{
+  "config": {
+    "service_url": "http://localhost:8080/rasdaman/ows",
+    "tmp_directory": "/tmp/",
+    "crs_resolver": "http://localhost:8080/def/",
+    "default_crs": "http://localhost:8080/def/OGC/0/Index2D",
+    "mock": false,
+    "automated": false,
+    "track_files": false
+  },
+  "input": {
+    "coverage_id": "lidarTest2",
+    "paths": [
+      "*.tif"
+    ]
+  },
+  "recipe": {
+    "name": "general_coverage",
+    "options": {
+      "coverage": {
+        "crs": "EPSG/0/4277@OGC/0/Index1D?axis-label=\"altitude\"",
+        "slicer": {
+          "type": "gdal",
+          "bands": [
+            {
+              "name": "Gray"
+            }
+          ],
+          "axes": {
+            "Lat": {
+              "min": "${gdal:minY}",
+              "max": "${gdal:maxY}",
+              "resolution": "${gdal:resolutionY}"
+            },
+            "Long": {
+              "min": "${gdal:minX}",
+              "max": "${gdal:maxX}",
+              "resolution": "${gdal:resolutionX}"
+            },
+            "altitude": {
+              "min": "int(regex_extract('${file:name}', '(.*)\\.(.*)\\.(.*)\\.(.*)\\.(.*)\\.tif', 5)) * 50 + 25",
+              "resolution": "50"
+            }
+          }
+        }
+      },
+      "tiling": "ALIGNED [0:1023, 0:1023, 0:4] TILE SIZE 4194304"
+    }
+  }
+}

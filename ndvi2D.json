@@ -1,0 +1,23 @@
+{
+  "config": {
+    "service_url": "http://localhost:8080/rasdaman/ows",
+    "tmp_directory": "/home/user/lidar/",
+    "crs_resolver": "http://localhost:8080/def/",
+    "default_crs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+    "mock": false,
+    "automated": false
+  },
+  "input": {
+    "coverage_id": "ndvi2D",
+    "paths": [
+      "/home/user/lidar/NDVI/*.tif"
+    ]
+  },
+  "recipe": {
+    "name": "map_mosaic",
+    "options": {
+      "tiling": "ALIGNED [0:1023, 0:1023] TILE SIZE 1048576"
+    }
+  }
+}
+
